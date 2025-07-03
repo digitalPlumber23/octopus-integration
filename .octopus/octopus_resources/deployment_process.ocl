@@ -1,3 +1,25 @@
+step "create-argo-k8s-objects" {
+    name = "create argo k8s objects"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "false"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                kubectl create ns argocd
+                kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool_variable = ""
+    }
+}
+
 step "postgresql-helmchart-deploy" {
     name = "postgresql helmchart deploy"
     properties = {
