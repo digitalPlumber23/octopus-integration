@@ -22,8 +22,7 @@ step "postgresql-helmchart-deploy" {
             Octopus.Action.Package.PackageId = "postgresql"
             Octopus.Action.Script.ScriptSource = "Package"
         }
-        worker_pool = "hosted-windows"
-        worker_pool_variable = ""
+        worker_pool = "hosted-ubuntu"
 
         packages {
             acquisition_location = "ExecutionTarget"
