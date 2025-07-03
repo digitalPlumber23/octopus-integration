@@ -109,3 +109,23 @@ step "deploy-result" {
         worker_pool = "hosted-ubuntu"
     }
 }
+
+step "deploy-infra" {
+    name = "deploy infra"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Helm.ChartDirectory = "infrastructure/"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+        }
+        worker_pool = "hosted-windows"
+        worker_pool_variable = ""
+    }
+}
