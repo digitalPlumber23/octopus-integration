@@ -9,20 +9,20 @@ variable "deploy_infra" {
     }
 }
 
-variable "namespace" {
-    value "kingsroad-dev" {
-        environment = ["development"]
-    }
-
-    value "kingsroad-tst" {
-        environment = ["testing"]
-    }
-
+variable "WHITEWALKERS.namespace" {
     value "kingsroad-acc" {
         environment = ["acceptance"]
     }
 
+    value "kingsroad-dev" {
+        environment = ["development"]
+    }
+
     value "kingsroad-prd" {
         environment = ["production"]
+    }
+
+    value "kingsroad-tst" {
+        environment = ["testing"]
     }
 }
