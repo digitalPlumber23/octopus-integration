@@ -48,7 +48,7 @@ step "checkout-update-deps" {
                 cd octopus-integration/infrastructure
                 helm dependency update
                 
-                helm upgrade --install infrastructure -n $(get_octopusvariable "namespace") .
+                helm upgrade --install infrastructure -n $(get_octopusvariable "WHITEWALKERS.namespace") .
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
@@ -68,7 +68,7 @@ step "deploy-a-helm-chart" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "worker/"
-            Octopus.Action.Helm.Namespace = "#{namespace}"
+            Octopus.Action.Helm.Namespace = "#{WHITEWALKERS.namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
@@ -89,7 +89,7 @@ step "deploy-vote" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "vote/"
-            Octopus.Action.Helm.Namespace = "#{namespace}"
+            Octopus.Action.Helm.Namespace = "#{WHITEWALKERS.namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
@@ -109,7 +109,7 @@ step "deploy-result" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "result/"
-            Octopus.Action.Helm.Namespace = "#{namespace}"
+            Octopus.Action.Helm.Namespace = "#{WHITEWALKERS.namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
