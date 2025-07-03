@@ -48,7 +48,7 @@ step "checkout-update-deps" {
                 cd octopus-integration/infrastructure
                 helm dependency update
                 
-                helm upgrade --install infrastructure .
+                helm upgrade --install infrastructure -n $(get_octopusvariable "namespace") .
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
