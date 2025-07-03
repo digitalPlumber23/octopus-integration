@@ -18,3 +18,42 @@ step "deploy-a-helm-chart" {
         worker_pool_variable = ""
     }
 }
+
+step "postgresql-helmchart-deploy" {
+    name = "postgresql helmchart deploy"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Helm.TemplateValuesSources = <<-EOT
+                [
+                  {
+                    "Type": "InlineYaml",
+                    "Value": "postgresql:\n  fullnameOverride: postgresql-development\n  auth:\n    postgresPassword: postgres"
+                  }
+                ]
+                EOT
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Package.DownloadOnTentacle = "True"
+            Octopus.Action.Package.FeedId = "postgresql-feed"
+            Octopus.Action.Package.PackageId = "postgresql"
+            Octopus.Action.Script.ScriptSource = "Package"
+        }
+        worker_pool = "hosted-windows"
+        worker_pool_variable = ""
+
+        packages {
+            acquisition_location = "ExecutionTarget"
+            feed = "postgresql-feed"
+            package_id = "postgresql"
+            properties = {
+                SelectionMode = "immediate"
+                ValuesFilePath = ""
+            }
+        }
+    }
+}
