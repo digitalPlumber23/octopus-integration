@@ -47,28 +47,23 @@ step "checkout-update-deps" {
     }
 }
 
-step "deploy-postgresql" {
-    name = "deploy postgresql - manual"
+step "deploy-infra" {
+    name = "deploy infra"
     properties = {
         Octopus.Action.TargetRoles = "kubernetes-cluster"
     }
 
     action {
-        action_type = "Octopus.Script"
+        action_type = "Octopus.HelmChartUpgrade"
         properties = {
-            Octopus.Action.RunOnServer = "false"
-            Octopus.Action.Script.ScriptBody = <<-EOT
-                
-                helm repo add bitnami https://charts.bitnami.com/bitnami
-                helm repo update
-                release_name="$(get_octopusvariable "Octopus.Action.Name")-$(get_octopusvariable "Octopus.Environment.Name")"
-                helm install $release_name bitnami/postgresql
-                
-                EOT
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Helm.ChartDirectory = "infrastructure/"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
         }
+        worker_pool = "hosted-windows"
+        worker_pool_variable = ""
     }
 }
 
@@ -130,22 +125,28 @@ step "deploy-result" {
     }
 }
 
-step "deploy-infra" {
-    name = "deploy infra"
+step "deploy-postgresql" {
+    name = "deploy postgresql - manual"
     properties = {
         Octopus.Action.TargetRoles = "kubernetes-cluster"
     }
 
     action {
-        action_type = "Octopus.HelmChartUpgrade"
+        action_type = "Octopus.Script"
+        is_disabled = true
         properties = {
-            Octopus.Action.GitRepository.Source = "Project"
-            Octopus.Action.Helm.ChartDirectory = "infrastructure/"
-            Octopus.Action.Helm.ResetValues = "True"
-            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
-            Octopus.Action.Script.ScriptSource = "GitRepository"
+            Octopus.Action.RunOnServer = "false"
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                
+                helm repo add bitnami https://charts.bitnami.com/bitnami
+                helm repo update
+                release_name="$(get_octopusvariable "Octopus.Action.Name")-$(get_octopusvariable "Octopus.Environment.Name")"
+                helm install $release_name bitnami/postgresql
+                
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
         }
-        worker_pool = "hosted-windows"
-        worker_pool_variable = ""
     }
 }
