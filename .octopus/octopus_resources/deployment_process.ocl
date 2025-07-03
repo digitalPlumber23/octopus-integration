@@ -41,7 +41,8 @@ step "deploy-postgresql" {
                 
                 helm repo add bitnami https://charts.bitnami.com/bitnami
                 helm repo update
-                helm install "$(get_octopusvariable "Octopus.Action.Name")-$(get_octopusvariable "Octopus.Environment.Name")" bitnami/postgresql
+                release_name="$(get_octopusvariable "Octopus.Action.Name")-$(get_octopusvariable "Octopus.Environment.Name")"
+                helm install $release_name bitnami/postgresql
                 
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
