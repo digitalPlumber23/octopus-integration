@@ -68,6 +68,7 @@ step "deploy-a-helm-chart" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "worker/"
+            Octopus.Action.Helm.Namespace = "#{namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
@@ -88,6 +89,7 @@ step "deploy-vote" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "vote/"
+            Octopus.Action.Helm.Namespace = "#{namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
@@ -107,36 +109,11 @@ step "deploy-result" {
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
             Octopus.Action.Helm.ChartDirectory = "result/"
+            Octopus.Action.Helm.Namespace = "#{namespace}"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
         }
         worker_pool = "hosted-ubuntu"
-    }
-}
-
-step "deploy-postgresql" {
-    name = "deploy postgresql - manual"
-    properties = {
-        Octopus.Action.TargetRoles = "kubernetes-cluster"
-    }
-
-    action {
-        action_type = "Octopus.Script"
-        is_disabled = true
-        properties = {
-            Octopus.Action.RunOnServer = "false"
-            Octopus.Action.Script.ScriptBody = <<-EOT
-                
-                helm repo add bitnami https://charts.bitnami.com/bitnami
-                helm repo update
-                release_name="$(get_octopusvariable "Octopus.Action.Name")-$(get_octopusvariable "Octopus.Environment.Name")"
-                helm install $release_name bitnami/postgresql
-                
-                EOT
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
-        }
     }
 }
