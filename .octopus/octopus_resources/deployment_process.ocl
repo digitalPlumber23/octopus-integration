@@ -65,8 +65,7 @@ step "deploy-infra" {
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
         }
-        worker_pool = "hosted-windows"
-        worker_pool_variable = ""
+        worker_pool = "hosted-ubuntu"
     }
 }
 
