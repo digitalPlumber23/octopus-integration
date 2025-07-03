@@ -26,6 +26,27 @@ step "create-argo-k8s-objects" {
     }
 }
 
+step "deploy-postgresql" {
+    name = "deploy postgresql"
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                
+                helm repo add bitnami https://charts.bitnami.com/bitnami
+                helm repo update
+                helm install postgresql bitnami/postgresql
+                
+                EOT
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "hosted-ubuntu"
+    }
+}
+
 step "deploy-a-helm-chart" {
     name = "deploy worker"
     properties = {
@@ -80,27 +101,6 @@ step "deploy-result" {
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
             Octopus.Action.Script.ScriptSource = "GitRepository"
-        }
-        worker_pool = "hosted-ubuntu"
-    }
-}
-
-step "deploy-postgresql" {
-    name = "deploy postgresql"
-
-    action {
-        action_type = "Octopus.Script"
-        properties = {
-            Octopus.Action.Script.ScriptBody = <<-EOT
-                
-                helm repo add bitnami https://charts.bitnami.com/bitnami
-                helm repo update
-                helm install postgresql bitnami/postgresql
-                
-                EOT
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-            OctopusUseBundledTooling = "False"
         }
         worker_pool = "hosted-ubuntu"
     }
