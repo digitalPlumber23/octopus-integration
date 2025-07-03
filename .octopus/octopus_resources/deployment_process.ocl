@@ -36,7 +36,8 @@ step "checkout-update-deps" {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 git clone https://$OctopusParameters["test.token"]@github.com/digitalPlumber23/octopus-integration.git
                 
-                ls -l
+                cd octopus-integration/infrastructure
+                helm dependency update 
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
