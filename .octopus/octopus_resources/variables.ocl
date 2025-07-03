@@ -8,3 +8,21 @@ variable "deploy_infra" {
         }
     }
 }
+
+variable "namespace" {
+    value "kingsroad-dev" {
+        environment = ["development"]
+    }
+
+    value "kingsroad-tst" {
+        environment = ["testing"]
+    }
+
+    value "kingsroad-acc" {
+        environment = ["acceptance"]
+    }
+
+    value "kingsroad-prd" {
+        environment = ["production"]
+    }
+}
