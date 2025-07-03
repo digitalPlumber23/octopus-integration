@@ -34,6 +34,7 @@ step "postgresql-helmchart-deploy" {
 
     action {
         action_type = "Octopus.HelmChartUpgrade"
+        is_disabled = true
         properties = {
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Helm.TemplateValuesSources = <<-EOT
@@ -65,12 +66,12 @@ step "postgresql-helmchart-deploy" {
 }
 
 step "deploy-a-helm-chart" {
-    name = "Deploy a Helm Chart"
+    name = "deploy worker"
     properties = {
         Octopus.Action.TargetRoles = "kubernetes-cluster"
     }
 
-    action {
+    action "deploy-worker" {
         action_type = "Octopus.HelmChartUpgrade"
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
