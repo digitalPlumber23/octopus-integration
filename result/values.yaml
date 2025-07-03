@@ -1,0 +1,12 @@
+# Default values for result-app.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+image:
+  repository: octosand/ing-result
+  tag: 1.0.11
+replicaCount: 1
+domain: sales-dev.codefresh.io
+analysis:
+  curl:
+    successCode: 200

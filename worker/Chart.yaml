@@ -1,0 +1,15 @@
+apiVersion: v2
+description: Helm Chart for Worker Service of Example Voting App
+name: worker
+keywords:
+  - codefresh
+  - kubernetes
+  - example-voting-app
+  - worker
+version: 1.0.2
+appVersion: 1.0.2
+sources:
+  - https://octopussamples@dev.azure.com/octopussamples/ing-manifest/_git/ing-manifest/worker
+maintainers:
+  - name: Jonathan Vermeulen
+    email: jonathan.vermeulen@octopus.com

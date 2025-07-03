@@ -1,0 +1,15 @@
+apiVersion: v2
+description: Helm Chart for Result Service of Example Voting App
+name: result
+keywords:
+  - codefresh
+  - kubernetes
+  - example-voting-app
+  - result
+version: 1.0.11
+appVersion: 1.0.11
+sources:
+  - https://octopussamples@dev.azure.com/octopussamples/ing-manifest/_git/ing-manifest/result
+maintainers:
+  - name: Jonathan Vermeulen
+    email: jonathan.vermeulen@octopus.com

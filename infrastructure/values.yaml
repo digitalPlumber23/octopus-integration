@@ -1,0 +1,11 @@
+postgresql:
+  enabled: true
+  fullnameOverride: postgresql-development
+  auth:
+    postgresPassword: postgres
+
+redis:
+  enabled: true
+  fullnameOverride: redis-development
+  auth: 
+    enabled: false

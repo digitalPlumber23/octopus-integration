@@ -1,0 +1,15 @@
+apiVersion: v2
+description: Helm Chart for Vote Service of Example Voting App
+name: vote
+keywords:
+  - codefresh
+  - kubernetes
+  - example-voting-app
+  - vote
+version: 1.0.3
+appVersion: 1.0.3
+sources:
+  - https://octopussamples@dev.azure.com/octopussamples/ing-manifest/_git/ing-manifest/vote
+maintainers:
+  - name: Jonathan Vermeulen
+    email: jonathan.vermeulen@octopus.com
