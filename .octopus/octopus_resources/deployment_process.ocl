@@ -85,3 +85,41 @@ step "deploy-a-helm-chart" {
         worker_pool_variable = ""
     }
 }
+
+step "deploy-vote" {
+    name = "deploy vote"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Helm.ChartDirectory = "vote/"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+        }
+        worker_pool = "hosted-ubuntu"
+    }
+}
+
+step "deploy-result" {
+    name = "deploy result"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Helm.ChartDirectory = "result/"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+        }
+        worker_pool = "hosted-ubuntu"
+    }
+}
