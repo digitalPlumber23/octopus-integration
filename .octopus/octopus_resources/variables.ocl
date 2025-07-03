@@ -1,5 +1,5 @@
 variable "deploy_infra" {
-    value "False" {
+    value "" {
         environment = ["development", "acceptance", "production"]
     }
 }
