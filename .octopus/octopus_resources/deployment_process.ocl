@@ -28,10 +28,14 @@ step "create-argo-k8s-objects" {
 
 step "deploy-postgresql" {
     name = "deploy postgresql"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
 
     action {
         action_type = "Octopus.Script"
         properties = {
+            Octopus.Action.RunOnServer = "false"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 
                 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -43,7 +47,6 @@ step "deploy-postgresql" {
             Octopus.Action.Script.Syntax = "Bash"
             OctopusUseBundledTooling = "False"
         }
-        worker_pool = "hosted-ubuntu"
     }
 }
 
