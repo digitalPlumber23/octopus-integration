@@ -1,5 +1,10 @@
 variable "deploy_infra" {
     value "" {
         environment = ["development", "acceptance", "production"]
+
+        prompt {
+            description = ""
+            label = "Deploy infra?"
+        }
     }
 }
