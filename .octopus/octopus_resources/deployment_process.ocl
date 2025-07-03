@@ -28,7 +28,7 @@ step "create-argo-k8s-objects" {
 }
 
 step "deploy-postgresql" {
-    name = "deploy postgresql"
+    name = "deploy postgresql - manual"
     properties = {
         Octopus.Action.TargetRoles = "kubernetes-cluster"
     }
