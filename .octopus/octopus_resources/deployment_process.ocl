@@ -3,7 +3,7 @@ step "create-argo-k8s-objects" {
     name = "create argo k8s objects"
     properties = {
         Octopus.Action.TargetRoles = "kubernetes-cluster"
-        Octopus.Step.ConditionVariableExpression = "#{if Octopus.deploy_infra == \"True\"}True#{/if}"
+        Octopus.Step.ConditionVariableExpression = "#{if deploy_infra}true#{/if}"
     }
 
     action {
