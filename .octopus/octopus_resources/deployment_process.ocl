@@ -19,6 +19,10 @@ step "create-argo-k8s-objects" {
                 
                 kubectl get crds
                 kubectl api-resources
+                
+                kubectl get ns
+                
+                
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
