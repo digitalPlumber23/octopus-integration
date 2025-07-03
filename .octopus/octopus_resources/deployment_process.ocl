@@ -1,24 +1,3 @@
-step "deploy-a-helm-chart" {
-    name = "Deploy a Helm Chart"
-    properties = {
-        Octopus.Action.TargetRoles = "kubernetes-cluster"
-    }
-
-    action {
-        action_type = "Octopus.HelmChartUpgrade"
-        properties = {
-            Octopus.Action.GitRepository.Source = "Project"
-            Octopus.Action.Helm.ChartDirectory = "worker/"
-            Octopus.Action.Helm.ReleaseName = "example-voting-app-infra"
-            Octopus.Action.Helm.ResetValues = "True"
-            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
-            Octopus.Action.Script.ScriptSource = "GitRepository"
-        }
-        worker_pool = "hosted-windows"
-        worker_pool_variable = ""
-    }
-}
-
 step "postgresql-helmchart-deploy" {
     name = "postgresql helmchart deploy"
     properties = {
@@ -55,5 +34,26 @@ step "postgresql-helmchart-deploy" {
                 ValuesFilePath = ""
             }
         }
+    }
+}
+
+step "deploy-a-helm-chart" {
+    name = "Deploy a Helm Chart"
+    properties = {
+        Octopus.Action.TargetRoles = "kubernetes-cluster"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.GitRepository.Source = "Project"
+            Octopus.Action.Helm.ChartDirectory = "worker/"
+            Octopus.Action.Helm.ReleaseName = "example-voting-app-infra"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
+            Octopus.Action.Script.ScriptSource = "GitRepository"
+        }
+        worker_pool = "hosted-windows"
+        worker_pool_variable = ""
     }
 }
