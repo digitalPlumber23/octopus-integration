@@ -11,7 +11,12 @@ step "create-argo-k8s-objects" {
             Octopus.Action.Script.ScriptBody = <<-EOT
                 kubectl create ns argocd
                 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+                
+                kubectl create namespace argo-rollouts
+                kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+                
                 kubectl get crds
+                kubectl api-resources
                 EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "Bash"
