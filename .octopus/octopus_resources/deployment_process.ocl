@@ -8,7 +8,7 @@ step "deploy-a-helm-chart" {
         action_type = "Octopus.HelmChartUpgrade"
         properties = {
             Octopus.Action.GitRepository.Source = "Project"
-            Octopus.Action.Helm.ChartDirectory = "infrastructure/"
+            Octopus.Action.Helm.ChartDirectory = "vote/"
             Octopus.Action.Helm.ReleaseName = "example-voting-app-infra"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Kubernetes.ResourceStatusCheck = "True"
